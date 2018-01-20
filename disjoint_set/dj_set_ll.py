@@ -77,3 +77,7 @@ class DisjointSet:
         # so, directly above while wouldn't execute
         else:
             temp.index_ptr = node1.index_ptr
+
+    # returns all the sets present in DisjointSet
+    def get_sets(self):
+        return self.node_map

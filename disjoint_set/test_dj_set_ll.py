@@ -31,3 +31,7 @@ if __name__ == '__main__':
 
     print dj.find_set('h').data  # f
     print dj.find_set('b').data  # f
+
+    dic = dj.get_sets()
+    for i in dic:
+        print i, '->', dic[i]
