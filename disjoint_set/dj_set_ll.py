@@ -32,6 +32,7 @@ class DisjointSet:
     # a dict is needed to store the address of representative of each set
     def __init__(self, node_map=None):
         self.node_map = node_map
+        self.sets_list = list()
 
     # creates a set containing one member, t.c = O(1)
     def create_set(self, data):
@@ -46,6 +47,9 @@ class DisjointSet:
 
         # store the address of representative into the dictionary
         self.node_map[data] = indexnode.head  # or node(since both are same)
+
+        # adding the set to sets_list
+        self.sets_list.append(indexnode.head)  # adding representative in list
 
     # finds the representative of member, t.c = O(1)
     def find_set(self, data):
@@ -78,6 +82,9 @@ class DisjointSet:
         else:
             temp.index_ptr = node1.index_ptr
 
+        # remove the set2 from the sets_list
+        self.sets_list.remove(node2)
+
     # returns all the sets present in DisjointSet
     def get_sets(self):
-        return self.node_map
+        return self.sets_list
