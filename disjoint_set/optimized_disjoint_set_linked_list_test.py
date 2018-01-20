@@ -12,7 +12,9 @@ if __name__ == '__main__':
     dj.create_set('b')
 
     dj.union('f', 'g')
+    print 'set of f: ', dj.find_set('f').data  # g
     dj.union('f', 'd')
+    print 'set of d: ', dj.find_set('d').data  # g
     dj.union('f', 'c')
     dj.union('f', 'h')
     dj.union('f', 'e')
@@ -21,6 +23,7 @@ if __name__ == '__main__':
     print 'set of h: ', dj.find_set('h').data  # f
     print 'set of b: ', dj.find_set('b').data  # f
 
-    print 'member count\n'
+    print '\nmember count'
     sets_list = dj.get_sets()
-    print sets_list[0].index_ptr.count
+    for val in sets_list:
+        print val.index_ptr.count
