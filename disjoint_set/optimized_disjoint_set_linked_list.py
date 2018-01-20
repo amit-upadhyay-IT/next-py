@@ -92,6 +92,12 @@ class DisjointSet:
         # Also, I have to change the tail of larger set to tail of smaller_set
         larger_set.index_ptr.tail = smaller_set.index_ptr.tail
 
+        # increment the count of larger_set, note that this line is needed to
+        # be written before setting the index_ptr of smaller_set nodes, i.e.
+        # before while loop coz there the count will get doubled as index_ptr
+        # of smaller_set nodes are getting updated to index_ptr of larger_set
+        larger_set.index_ptr.count += smaller_set.index_ptr.count
+
         # setting the index_ptr of each node in set2 to indexnode of set1
         temp = smaller_set
         while temp.next_node is not None:
