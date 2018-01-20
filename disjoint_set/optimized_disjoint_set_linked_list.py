@@ -62,7 +62,7 @@ class DisjointSet:
         else:  # returninig None as we don't found such data in set
             return None
 
-    # unites the two set, takes O(n) amortized time (cost per operation)
+    # unites the two set, takes O(1) amortized time (cost per operation)
     def union(self, data1, data2):
 
         # getting the nodes for corresponding data
