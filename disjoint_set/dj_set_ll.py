@@ -66,6 +66,10 @@ class DisjointSet:
         node1 = self.find_set(data1)  # node1 is representative of set1
         node2 = self.find_set(data2)  # node2 is representative of set2
 
+        # check if both data1 and data2 belong to same set or not
+        if node1 == node2:
+            return
+
         # I will append the set2 at end of set1
         # setting the set1 tail next pointer to head of set2
         node1.index_ptr.tail.next_node = node2.index_ptr.head
