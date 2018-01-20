@@ -44,7 +44,7 @@ class DisjointSet:
     def find_set(self, data):
         if data in self.node_map:
             node = self.node_map[data]
-            return node
+            return node.index_ptr.head  # returns the representative of set
         else:  # returninig None as we don't found such data in set
             return None
 
@@ -65,6 +65,10 @@ class DisjointSet:
         while temp.next_node is not None:
             temp.index_ptr = node1.index_ptr
             temp = temp.next_node
+        # while doing union of sets with 1 member the next_node will be None
+        # so, directly above while wouldn't execute
+        else:
+            temp.index_ptr = node1.index_ptr
 
 
 if __name__ == '__main__':
