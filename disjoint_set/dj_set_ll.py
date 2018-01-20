@@ -5,6 +5,11 @@ Operations:
     1. create set
     2. find set
     3. union
+
+In this implementation the amortized time for union is O(n), but this time
+can be improved to O(1) amortized time by keeping track of count of members
+in the set. Coz, while performing union we can merge the smaller set at the
+end of larger set (so time for changing the index_ptr will get reduced)
 '''
 
 
@@ -28,6 +33,7 @@ class DisjointSet:
     def __init__(self, node_map=None):
         self.node_map = node_map
 
+    # creates a set containing one member, t.c = O(1)
     def create_set(self, data):
         # create the index node
         indexnode = IndexNode()
@@ -41,6 +47,7 @@ class DisjointSet:
         # store the address of representative into the dictionary
         self.node_map[data] = indexnode.head  # or node(since both are same)
 
+    # finds the representative of member, t.c = O(1)
     def find_set(self, data):
         if data in self.node_map:
             node = self.node_map[data]
@@ -48,6 +55,7 @@ class DisjointSet:
         else:  # returninig None as we don't found such data in set
             return None
 
+    # unites the two set, takes O(n) amortized time (cost per operation)
     def union(self, data1, data2):
 
         # getting the nodes for corresponding data
@@ -69,32 +77,3 @@ class DisjointSet:
         # so, directly above while wouldn't execute
         else:
             temp.index_ptr = node1.index_ptr
-
-
-if __name__ == '__main__':
-    dj = DisjointSet(dict())
-    dj.create_set('f')
-    dj.create_set('g')
-    dj.create_set('d')
-
-    print dj.find_set('g').data  # g
-
-    dj.create_set('c')
-    dj.create_set('h')
-    dj.create_set('e')
-    dj.create_set('b')
-
-    print dj.find_set('e').data  # e
-
-    dj.union('f', 'g')
-    dj.union('g', 'd')
-
-    print dj.find_set('d').data  # f
-
-    dj.union('f', 'c')
-    dj.union('g', 'h')
-    dj.union('f', 'e')
-    dj.union('g', 'b')
-
-    print dj.find_set('h').data  # f
-    print dj.find_set('b').data  # f
