@@ -1,8 +1,8 @@
-import optimized_disjoint_set_linked_list
+import disjointset3
 
 
 if __name__ == '__main__':
-    dj = optimized_disjoint_set_linked_list.DisjointSet(dict())
+    dj = disjointset3.DisjointSet(dict())
     dj.create_set('f')
     dj.create_set('g')
     dj.create_set('d')
