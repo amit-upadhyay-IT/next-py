@@ -6,8 +6,6 @@ All three operations take constant time in amortized analysis
 
 class Node:
 
-    data, parent, rank = None, None, None
-
     def __init__(self, data=None, rank=None):
         self.data = data
         self.rank = rank

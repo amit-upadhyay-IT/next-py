@@ -17,5 +17,5 @@ Here you will find the implementation of disjoint set with the main three operat
 
 # TODO:
 
-- Optimize the design, or ask a question for its perfect design on stackexchange review.
+- Optimize the design for forest implementation, or ask a question for its perfect design on stackexchange review.
 
