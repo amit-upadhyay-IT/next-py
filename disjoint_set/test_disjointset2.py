@@ -1,11 +1,11 @@
 '''
-code to test the `dj_set_ll` module
+code to test the `disjointset2` module
 '''
-import dj_set_ll
+import disjointset2
 
 
 if __name__ == '__main__':
-    dj = dj_set_ll.DisjointSet(dict())
+    dj = disjointset2.DisjointSet(dict())
     print 'creating set f\n'
     dj.create_set('f')
     print 'creating set g\n'
