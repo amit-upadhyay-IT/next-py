@@ -1,8 +1,8 @@
-import dj_set
+import disjointset
 
 
 if __name__ == '__main__':
-    disjoint = dj_set.DisjointSet(dict())
+    disjoint = disjointset.DisjointSet(dict())
     disjoint.create_set(10)
     disjoint.create_set(20)
     disjoint.create_set(30)
