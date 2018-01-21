@@ -8,7 +8,10 @@ Operations:
     3. union
     4. get sets
 
-Here amortized time for union is O(1)
+Here amortized time for union is O(1). Here I am taking the amortized time for
+n create_set operations followed by n-1 union operations. So amortized time =
+O(n)/O(n), where numerator is cost of 2n-1 operation and denominator is count
+of total operation
 '''
 
 
