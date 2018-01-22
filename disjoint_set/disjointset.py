@@ -1,62 +1,69 @@
 '''
 disjoint set forest implementation
-All three operations take constant time in amortized analysis
 '''
 
 
 class Node:
-
-    def __init__(self, data=None, rank=None):
+    # the identity of node(member of set) is given by data, parent_link, rank
+    def __init__(self, data=None, rank=None, parent_link=None):
         self.data = data
         self.rank = rank
-
-    def set_parent(self, parent):
-        self.parent = parent
+        self.parent_link = parent_link
 
 
 class DisjointSet:
-
-    # the node_map does the mapping of data to the node reference
-    def __init__(self, node_map=None):
+    # dictionary is important here because here I need to map data to node
+    def __init__(self, node_map):
         self.node_map = node_map
 
-    # create a new node, fill data into it, make it point to itself, set rank-0
+    # create a new set i.e create a node, make it point to itself and set rank
     def create_set(self, data):
-        node = Node(data, 0)  # passing the data and the rank
-        node.set_parent(node)
-        self.node_map[data] = node  # data to node mapping in the dictionary
+        node = Node(data, 0)  # setting the data and rank
+        node.parent_link = node  # since its the only node in the set
+        self.node_map[data] = node  # creating the data to node mapping
 
-    # returns True if union is performed sucessfully otherwise returns False
-    def union(self, data1, data2):
-        node1 = self.node_map.get(data1)
-        node2 = self.node_map.get(data2)
-
-        parent1 = self.find_set_main(node1)
-        parent2 = self.find_set_main(node2)
-
-        # check if they are part of same set or not
-        if parent1.data == parent2.data:
-            return False  # indicate that there is no union possible
-
-        # the node with higher rank should become the final parent
-        if parent1.rank >= parent2.rank:
-            # if rank of both the node are same then increment the final rank
-            parent1.rank = 1 + parent1.rank if parent1.rank == parent2.rank \
-                    else parent1.rank
-            # set the parent of node2 as parent1
-            parent2.parent = parent1
-        else:
-            parent1.parent = parent2
-        return True
-
-    # the function itself calls another function to find the representative
+    # returns the data contained in the representative_node
     def find_set(self, data):
-        return self.find_set_main(self.node_map.get(data)).data
+        # getting the node containing data
+        node = self.node_map[data]
+        representative_node = self.find_representative(node)
+        return representative_node.data
 
-    # returns the representative node, does the path compression recursively
-    def find_set_main(self, node):
-        parent = node.parent
-        if parent == node:  # checking if we reached the parent or not
+    # returns the representative_node of the node passed as agrument in fun
+    # this method is also responsible for path compression, here I am using
+    # recusive approach to perform the path compression
+    def find_representative(self, node):
+        # getting the parent of the given node
+        parent = node.parent_link
+        # check if the parent is the root (i.e. representative_node) or not
+        if parent == node:  # if root, then parent will be same as node
             return parent
-        node.parent = self.find_set_main(node.parent)
-        return node.parent
+        # set the parent_link of each node in the path to the root
+        node.parent_link = self.find_representative(node.parent_link)
+        return node.parent_link
+
+    # performs the union using using by rank method
+    def union(self, data1, data2):
+        # get the node corrosponding to data1 and data2
+        node1 = self.node_map[data1]
+        node2 = self.node_map[data2]
+
+        # check if both data1 and data2 belongs to same set or not
+        # for this I need to know the representative_node of each data1 & data2
+        rep1 = self.find_representative(node1)
+        rep2 = self.find_representative(node2)
+        if rep1.data == rep2.data:
+            return False  # False indicates, there is not need to perform union
+
+        # the tree with higher rank should become the final representative_node
+        if rep1.rank >= rep2.rank:
+            # if rank of both set is same then final rank will increase by 1
+            # else the rank would be same as rep1's rank
+            rep1.rank = 1 + rep1.rank if rep1.rank == rep2.rank else rep1.rank
+
+            # set the parent_link of set2 to representative_node of set1
+            rep2.parent_link = rep1
+        else:
+            # setting the parent_link of set1 to representative_node of set2
+            rep1.parent_link = rep2
+        return True  # represents that union happened successfully
