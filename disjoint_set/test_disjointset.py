@@ -1,8 +1,8 @@
-import amit
+import disjointset
 
 
 if __name__ == '__main__':
-    disjoint = amit.DisjointSet(dict())
+    disjoint = disjointset.DisjointSet(dict())
     disjoint.create_set(10)
     disjoint.create_set(20)
     disjoint.create_set(30)

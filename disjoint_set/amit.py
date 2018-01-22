@@ -1,7 +1,5 @@
 '''
-disjoint set forest implementation, uses union by rank and path compression
-worst case T.C for find_set is O(logn) in first find_set operation
-T.C for union and create_set is O(1)
+disjoint set forest implementation
 '''
 
 
