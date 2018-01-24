@@ -33,7 +33,7 @@ class Queue:
         # if front now becomes None, then we need to set the rear as None too
         if self.front is None:
             self.rear = None
-        return node
+        return node.data
 
     # returns True is queue is empty else returns False
     def is_empty(self):
