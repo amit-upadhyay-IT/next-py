@@ -1,3 +1,10 @@
+'''
+a----d
+|    |
+|    |
+b----c
+'''
+
 import graphs
 
 if __name__ == '__main__':

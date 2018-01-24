@@ -29,7 +29,7 @@ class Gr(object):
             lis = self.node_dic[key]
             print key, '->', [str(i.vertex)+':'+str(i.weight) for i in lis]
 
-    # bredth first traversal
+    # bredth first traversal, time: O(v+e)
     def bft(self):
         # initialize the visited dictionary. why is visited a dict?
         # coz, if I use list then to access members I can only use the index
@@ -47,6 +47,7 @@ class Gr(object):
         print
 
     # bredth first search, v is the vertex from where the search starts
+    # time complexity = O(v + e) or O(v + 2e)
     def bfs(self, v, visited):
         # creating the queue
         queue = list()
@@ -73,7 +74,7 @@ class Gr(object):
                 # since queue is not empty, so pop from queue & update v
                 v = queue.pop(0)
 
-    # depth first traversal
+    # depth first traversal: time = O(e+v) or O(2e+v)
     def dft(self):
         # initialize the visited dictionary. why is visited a dict?
         # coz, if I use list then to access members I can only use the index
@@ -91,6 +92,7 @@ class Gr(object):
         print
 
     # depth first search, v is the vertex from where search starts
+    # time complexity = O(v + e) or O(v + 2e)
     def dfs(self, v, visited):
         # set v in visited to True
         visited[v] = True
@@ -101,6 +103,7 @@ class Gr(object):
         adjacent_list = [i.vertex for i in self.node_dic.get(v)]
         for w in adjacent_list:
             if visited[w] is False:
+                # exploring the node without visiting other adjacent
                 self.dfs(w, visited)
 
 
