@@ -58,9 +58,7 @@ Example:
 import disjointset
 ```
 
-## Operations:
-
-### Create instance:
+#### Create instance:
 
 Example: if you have download disjointset.py file, then:
 
@@ -69,6 +67,8 @@ disjoint = disjointset.DisjointSet(dict())
 ```
 
 You need to pass a `dict()` object because the code is using a dictionary for doing data to node mapping in the disjoint set.
+
+## Operations:
 
 ### Create set:
 
