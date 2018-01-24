@@ -42,18 +42,21 @@ class Gr(object):
         # iterate through the all the vertices and call the bfs
         for v in self.node_dic:
             if visited[v] is False:
-                self.bfs(v)
+                self.bfs(v, visited)
 
     # bredth first search, v is the vertex from where the search starts
     def bfs(self, v, visited):
         # creating the queue
         queue = list()
         visited[v] = True
+        # print first vertex
+        print v
         # repeating until the queue gets empty
         while True:
-            # get the adjacent list for node 'v'
-            adjacent_list = self.node_dic.get(v)
+            # get the adjacent list for node 'v', from list I fetch vertex only
+            adjacent_list = [i.vertex for i in self.node_dic.get(v)]
             for w in adjacent_list:
+                # get the vertex from the adjacent node
                 if visited[w] is False:
                     # add w to queue
                     queue.append(w)
@@ -61,12 +64,12 @@ class Gr(object):
                     print w
                     # update the visited dict
                     visited[w] = True
-                # if queue is empty then break the loop
-                if len(queue) <= 0:
-                    break
-                # since queue is not empty, so pop from queue & update v
-                else:
-                    v = queue.pop(0)
+            # if queue is empty then break the loop
+            if len(queue) <= 0:
+                break
+            # since queue is not empty, so pop from queue & update v
+            else:
+                v = queue.pop(0)
 
 
 # directed graph
@@ -127,6 +130,8 @@ if __name__ == '__main__':
     print 'printing the digraph'
     digraph.print_graph()
     print
+    print 'bft\n'
+    digraph.bft()
 
     print 'printing the graph'
     graph = Graph(dict())
@@ -136,3 +141,7 @@ if __name__ == '__main__':
     graph.add_edge('d', 'a', 1)
 
     graph.print_graph()
+
+    print
+    print 'bft\n'
+    graph.bft()
