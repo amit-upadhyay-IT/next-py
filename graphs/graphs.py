@@ -27,7 +27,7 @@ class Gr(object):
         for key in self.node_dic:
             # get the list
             lis = self.node_dic[key]
-            print key, '->', [i.vertex for i in lis]
+            print key, '->', [str(i.vertex)+':'+str(i.weight) for i in lis]
 
     # bredth first traversal
     def bft(self):
@@ -69,8 +69,8 @@ class Gr(object):
             # if queue is empty then break the loop
             if len(queue) <= 0:
                 break
-            # since queue is not empty, so pop from queue & update v
             else:
+                # since queue is not empty, so pop from queue & update v
                 v = queue.pop(0)
 
 
