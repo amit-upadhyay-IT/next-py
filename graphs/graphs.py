@@ -1,5 +1,6 @@
 '''
-adjacency list implementation
+Graph implementation using adjacency list.
+This file contains implementation of some algos on graph
 '''
 
 
@@ -43,6 +44,7 @@ class Gr(object):
         for v in self.node_dic:
             if visited[v] is False:
                 self.bfs(v, visited)
+        print
 
     # bredth first search, v is the vertex from where the search starts
     def bfs(self, v, visited):
@@ -50,7 +52,7 @@ class Gr(object):
         queue = list()
         visited[v] = True
         # print first vertex
-        print v
+        print v,
         # repeating until the queue gets empty
         while True:
             # get the adjacent list for node 'v', from list I fetch vertex only
@@ -61,7 +63,7 @@ class Gr(object):
                     # add w to queue
                     queue.append(w)
                     # print w
-                    print w
+                    print w,
                     # update the visited dict
                     visited[w] = True
             # if queue is empty then break the loop
@@ -114,34 +116,3 @@ class Graph(Gr):
             lis.append(Node(src, weight))
         else:
             self.node_dic[dest] = [Node(src, weight)]
-
-
-if __name__ == '__main__':
-    digraph = DiGraph(dict())
-    digraph.add_edge('a', 'b', 1)
-    digraph.add_edge('a', 'd', 1)
-    digraph.add_edge('b', 'a', 3)
-    digraph.add_edge('b', 'c', 1)
-    digraph.add_edge('c', 'b', 1)
-    digraph.add_edge('c', 'd', 5)
-    digraph.add_edge('d', 'c', 1)
-    digraph.add_edge('d', 'a', 6)
-
-    print 'printing the digraph'
-    digraph.print_graph()
-    print
-    print 'bft\n'
-    digraph.bft()
-
-    print 'printing the graph'
-    graph = Graph(dict())
-    graph.add_edge('a', 'b', 1)
-    graph.add_edge('b', 'c', 1)
-    graph.add_edge('c', 'd', 1)
-    graph.add_edge('d', 'a', 1)
-
-    graph.print_graph()
-
-    print
-    print 'bft\n'
-    graph.bft()
