@@ -24,9 +24,9 @@ Here you will find the implementation of disjoint set with the main three operat
 ['./test_disjointset3.py'](./test_disjointset3.py) is example testcase.
 
 
-# How to use?
+## How to use?
 
-## install
+### install
 
 To install you can download the file:
 
@@ -48,7 +48,7 @@ wget https://raw.githubusercontent.com/amit-upadhyay-IT/next-py/master/disjoint_
 wget https://raw.githubusercontent.com/amit-upadhyay-IT/next-py/master/disjoint_set/disjointset3.py
 ```
 
-### import
+#### import
 
 Import the file you wish to use.
 
@@ -58,9 +58,11 @@ Example:
 import disjointset
 ```
 
+## Operations:
+
 ### Create instance:
 
-Example:
+Example: if you have download disjointset.py file, then:
 
 ```
 disjoint = disjointset.DisjointSet(dict())
@@ -70,7 +72,7 @@ You need to pass a `dict()` object because the code is using a dictionary for do
 
 ### Create set:
 
-Example:
+**Example**:
 
 ```
 disjoint.create_set(20)
@@ -79,9 +81,9 @@ disjoint.create_set(20)
 In the above example `20` is the data which is the member (representative) of the set.
 
 
-### union:
+### Union:
 
-Example:
+**Example**:
 
 ```
 disjoint.union(10, 20)
@@ -89,12 +91,11 @@ disjoint.union(10, 20)
 
 unites the two set.
 
-### find set:
+### Find Set:
 
-Example:
+**Example**:
 
 ```
 disjoint.find_set(20)
 ```
-
-returns the representative element for the set containing `20`.
+`find_set` returns the representative element for the set containing `20`.
