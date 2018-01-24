@@ -40,6 +40,8 @@ if __name__ == '__main__':
     print
     print 'bft:'
     digraph.bft()
+    print 'dft:'
+    digraph.dft()
 
     print '\nprinting the graph'
     graph = graphs.Graph(dict())
@@ -59,3 +61,6 @@ if __name__ == '__main__':
     print
     print 'bft:'
     graph.bft()
+    print
+    print 'dft:'
+    graph.dft()

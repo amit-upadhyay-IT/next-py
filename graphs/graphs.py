@@ -73,6 +73,36 @@ class Gr(object):
                 # since queue is not empty, so pop from queue & update v
                 v = queue.pop(0)
 
+    # depth first traversal
+    def dft(self):
+        # initialize the visited dictionary. why is visited a dict?
+        # coz, if I use list then to access members I can only use the index
+        # in the list and the index is always a integer, so if the graph node
+        # contains someother type of data, then using just list wouldn't work
+        visited = dict()
+        # iterate through all the vertices in the graph and add them in visited
+        for v in self.node_dic:
+            # initilizing with False because initially none is visited
+            visited[v] = False
+        # iterate through the all the vertices and call the bfs
+        for v in self.node_dic:
+            if visited[v] is False:
+                self.dfs(v, visited)
+        print
+
+    # depth first search, v is the vertex from where search starts
+    def dfs(self, v, visited):
+        # set v in visited to True
+        visited[v] = True
+        # print the vertex
+        print v,
+        # get the adjacent nodes(i.e. adjacent list) for vertex v
+        # from list I fetch vertex only
+        adjacent_list = [i.vertex for i in self.node_dic.get(v)]
+        for w in adjacent_list:
+            if visited[w] is False:
+                self.dfs(w, visited)
+
 
 # directed graph
 class DiGraph(Gr):
