@@ -12,13 +12,30 @@ class Node:
         self.weight = weight
 
 
-# directed graph
-class DiGraph:
+# a parent class for the different types of Graphs, this class is created
+# to reuse the code snippets like print_graph, bfs and dfs, etc
+class Gr(object):
     # In adjacency list representative I would need a mapper to map the node
     # value with the list representing the adjacency list (i.e. adjacent nodes)
     # so I use a dictionary to create data to list mapping
     def __init__(self, node_dic=None):
         self.node_dic = node_dic
+
+    # printing the adjacency list
+    def print_graph(self):
+        for key in self.node_dic:
+            # get the list
+            lis = self.node_dic[key]
+            print key, '->', [i.vertex for i in lis]
+
+
+# directed graph
+class DiGraph(Gr):
+    # In adjacency list representative I would need a mapper to map the node
+    # value with the list representing the adjacency list (i.e. adjacent nodes)
+    # so I use a dictionary to create data to list mapping
+    def __init__(self, node_dic=None):
+        Gr.__init__(self, node_dic)
 
     # this method adds the edge b/w src node to dest node with specified weight
     def add_edge(self, src, dest, weight):
@@ -32,21 +49,14 @@ class DiGraph:
             # as the src wasn't present in dictionary, so add it
             self.node_dic[src] = [Node(dest, weight)]
 
-    # printing the adjacency list
-    def print_graph(self):
-        for key in self.node_dic:
-            # get the list
-            lis = self.node_dic[key]
-            print key, '->', [i.vertex for i in lis]
-
 
 # un-directed graph
-class Graph:
+class Graph(Gr):
     # In adjacency list representative I would need a mapper to map the node
     # value with the list representing the adjacency list (i.e. adjacent nodes)
     # so I use a dictionary to create data to list mapping
     def __init__(self, node_dic):
-        self.node_dic = node_dic
+        Gr.__init__(self, node_dic)
 
     # method to create edge between the src and dest node with specified weight
     def add_edge(self, src, dest, weight):
@@ -64,13 +74,6 @@ class Graph:
             lis.append(Node(src, weight))
         else:
             self.node_dic[dest] = [Node(src, weight)]
-
-    # printing the adjacency list
-    def print_graph(self):
-        for key in self.node_dic:
-            # get the list
-            lis = self.node_dic[key]
-            print key, '->', [i.vertex for i in lis]
 
 
 if __name__ == '__main__':
