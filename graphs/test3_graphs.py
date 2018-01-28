@@ -24,3 +24,4 @@ if __name__ == '__main__':
     digraph.add_edge('v4', 'v3', 1)
 
     digraph.print_graph()
+    print 'nodes count:', digraph.vertices_count()

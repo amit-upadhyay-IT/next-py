@@ -113,6 +113,8 @@ class DiGraph(Gr):
     def __init__(self, node_dic=None):
         # calling the parent class constructor
         Gr.__init__(self, node_dic)
+        # using a set to keep the count of vertices in graph
+        self.vertex_cnt = set()
 
     # this method adds the edge b/w src node to dest node with specified weight
     def add_edge(self, src, dest, weight):
@@ -125,6 +127,16 @@ class DiGraph(Gr):
         else:
             # as the src wasn't present in dictionary, so add it
             self.node_dic[src] = [Node(dest, weight)]
+        # why do I need to use extra memory for set to keep the count of
+        # vertices in graph?
+        # as in directed graph, we can have nodes with some indegree but zero
+        # out-degree, so for that case we don't create an entry in node_dic
+        # thus we miss out that vertex in the count, so I use a set here
+        self.vertex_cnt.add(src)
+        self.vertex_cnt.add(dest)
+
+    def vertices_count(self):
+        return len(self.vertex_cnt)
 
 
 # un-directed graph
@@ -149,3 +161,8 @@ class Graph(Gr):
             lis.append(Node(src, weight))
         else:
             self.node_dic[dest] = [Node(src, weight)]
+
+    # since, this is un-directed graph, so src and dest both will have entry
+    # in the node_dic
+    def vertices_count(self):
+        return len(self.node_dic)
