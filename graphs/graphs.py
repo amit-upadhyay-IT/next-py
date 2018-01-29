@@ -138,53 +138,6 @@ class DiGraph(Gr):
     def vertices_count(self):
         return len(self.vertex_cnt)
 
-    # prints the elements in topological sorted manner
-    # time = O(V*E + V), we can optimize this time by adding some other ds
-    def topological_sort(self):
-        print '\ntopological sort:'
-        # run a loop untill graph is not empty
-        while True:
-            # get the node with indegree as zero
-            for k in list(self.vertices_set):
-                # check if conde containing k has indegree zero or not
-                ret = self.check_vertex(k)
-                if ret is not None:
-                    # it's the node with indegree as zero
-                    print k,
-                    # now delete the entry containing k from dictionary
-                    # note only delete if k is present in dic, otherwise you
-                    # will face KeyError, checking will be constant time work
-                    if k in self.node_dic:
-                        del self.node_dic[k]
-                    # also remove from the set
-                    self.vertices_set.remove(k)
-            if len(self.vertices_set) <= 0:
-                    break
-
-    # check if node containing 'v' has indegree zero or not
-    # if indegree of node containing 'v' is zero then it must not be the
-    # adjacent of any other vertex (i.e. it should not be present in any of the
-    # list being pointed by the array of pointers i.e. dict value)
-    # time = O(E), as we need to search for all elements in list pointed by dict
-    # value
-    def check_vertex(self, v):
-        # keeping flag to indicate if we found node containing v or not
-        flag = False
-        # iterate though the lists in dictionary
-        for key in self.node_dic:
-            # get the list corrospoinding to the key
-            lis = self.node_dic.get(key)
-            if v in [i.vertex for i in lis]:
-                # change flag and represent that v is found as adjacent
-                flag = True
-                # as we already found v somewhere as adjacent to no need to go
-                # further, thus breaking out of the loop
-                break
-        if flag is False:
-            return v  # itnicates node containing v has indegree as zero
-        else:
-            return None
-
 
 # un-directed graph
 class Graph(Gr):
