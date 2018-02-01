@@ -21,6 +21,8 @@ class Gr(object):
     # so I use a dictionary to create data to list mapping
     def __init__(self, node_dic=None):
         self.node_dic = node_dic
+        # using a set to keep the count of vertices in graph
+        self.vertices_set = set()
 
     # printing the adjacency list
     def print_graph(self):
@@ -28,6 +30,9 @@ class Gr(object):
             # get the list
             lis = self.node_dic[key]
             print key, '->', [str(i.vertex)+':'+str(i.weight) for i in lis]
+
+    def vertices_count(self):
+        return len(self.vertices_set)
 
     # bredth first traversal, time: O(v+e)
     def bft(self):
@@ -82,7 +87,9 @@ class Gr(object):
         # contains someother type of data, then using just list wouldn't work
         visited = dict()
         # iterate through all the vertices in the graph and add them in visited
-        for v in self.node_dic:
+        # since, it's not necessary that all vertices are present in node_dic,
+        # (in case of some DAG)so, I will initiallize visited with vertices_set
+        for v in self.vertices_set:
             # initilizing with False because initially none is visited
             visited[v] = False
         # iterate through the all the vertices and call the bfs
@@ -100,11 +107,16 @@ class Gr(object):
         print v,
         # get the adjacent nodes(i.e. adjacent list) for vertex v
         # from list I fetch vertex only
-        adjacent_list = [i.vertex for i in self.node_dic.get(v)]
-        for w in adjacent_list:
-            if visited[w] is False:
-                # exploring the node without visiting other adjacent
-                self.dfs(w, visited)
+        # Also, in some cases adjacent_list may be None (eg, in DAG, all
+        # vertices might not be in node_dic), so for loop will throw TypeError
+        # in that case
+        if v in self.node_dic:
+            adjacent_list = [i.vertex for i in self.node_dic.get(v)]
+            if adjacent_list is not None:
+                for w in adjacent_list:
+                    if w in visited and visited[w] is False:
+                        # exploring the node without visiting other adjacent
+                        self.dfs(w, visited)
 
 
 # directed graph
@@ -113,8 +125,6 @@ class DiGraph(Gr):
     def __init__(self, node_dic=None):
         # calling the parent class constructor
         Gr.__init__(self, node_dic)
-        # using a set to keep the count of vertices in graph
-        self.vertex_cnt = set()
 
     # this method adds the edge b/w src node to dest node with specified weight
     def add_edge(self, src, dest, weight):
@@ -132,11 +142,8 @@ class DiGraph(Gr):
         # as in directed graph, we can have nodes with some indegree but zero
         # out-degree, so for that case we don't create an entry in node_dic
         # thus we miss out that vertex in the count, so I use a set here
-        self.vertex_cnt.add(src)
-        self.vertex_cnt.add(dest)
-
-    def vertices_count(self):
-        return len(self.vertex_cnt)
+        self.vertices_set.add(src)
+        self.vertices_set.add(dest)
 
 
 # un-directed graph
@@ -161,8 +168,16 @@ class Graph(Gr):
             lis.append(Node(src, weight))
         else:
             self.node_dic[dest] = [Node(src, weight)]
+        # vertices_set isn't necessarly required for un-directed graph, as its
+        # purpose can be completed by node_dic, but still I have made it for
+        # compatiblity with its parent class, coz someone may like using
+        # vertices_set, insted of node_dic
+        # NOTE: don't remove this coz my dft implementation uses this set to
+        # initialize the visited dict
+        self.vertices_set.add(src)
+        self.vertices_set.add(dest)
 
     # since, this is un-directed graph, so src and dest both will have entry
-    # in the node_dic
+    # in the node_dic, this is overridden function
     def vertices_count(self):
         return len(self.node_dic)

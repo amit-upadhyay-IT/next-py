@@ -25,3 +25,5 @@ if __name__ == '__main__':
 
     digraph.print_graph()
     print 'nodes count:', digraph.vertices_count()
+    print
+    digraph.dft()
