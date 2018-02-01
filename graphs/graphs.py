@@ -200,6 +200,7 @@ class DiGraph(Gr):
     # prints the elements in topological sorted manner
     # modified dft method
     # the idea behind this algo is given here: https://youtu.be/n_yl2a6n7nM
+    # time: O(V+E), as this is just modified version of dft
     def topological_sort(self):
         # init a stack
         stack = list()
