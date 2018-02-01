@@ -144,6 +144,90 @@ class DiGraph(Gr):
         self.vertices_set.add(src)
         self.vertices_set.add(dest)
 
+    # prints the elements in topological sorted manner
+    # time = O(V*E),
+    # Since, this implementation of adjacency list is done using lists of dict
+    # so, the time complexity comes to O(EV), if I would have implemented the
+    # graph using dictionary of dictionary, then this same approach will result
+    # in O(V*V) time, as searching over the list time will get reducted
+    # Even in the implementation of adjacency list we can improve time by using
+    # queue
+    def topological_sort2(self):
+        print '\ntopological sort:'
+        # run a loop untill graph is not empty
+        while True:
+            # get the node with indegree as zero
+            for k in list(self.vertices_set):
+                # check if conde containing k has indegree zero or not
+                ret = self.check_vertex(k)
+                if ret is not None:
+                    # it's the node with indegree as zero
+                    print k,
+                    # now delete the entry containing k from dictionary
+                    # note only delete if k is present in dic, otherwise you
+                    # will face KeyError, checking will be constant time work
+                    if k in self.node_dic:
+                        del self.node_dic[k]
+                    # also remove from the set
+                    self.vertices_set.remove(k)
+            if len(self.vertices_set) <= 0:
+                    break
+
+    # check if node containing 'v' has indegree zero or not
+    # if indegree of node containing 'v' is zero then it must not be the
+    # adjacent of any other vertex (i.e. it should not be present in any of the
+    # list being pointed by the array of pointers i.e. dict value)
+    # time = O(E), as we need to search for all elements in list pointed by dict
+    # value
+    def check_vertex(self, v):
+        # keeping flag to indicate if we found node containing v or not
+        flag = False
+        # iterate though the lists in dictionary
+        for key in self.node_dic:
+            # get the list corrospoinding to the key
+            lis = self.node_dic.get(key)
+            if v in [i.vertex for i in lis]:
+                # change flag and represent that v is found as adjacent
+                flag = True
+                # as we already found v somewhere as adjacent to no need to go
+                # further, thus breaking out of the loop
+                break
+        if flag is False:
+            return v  # itnicates node containing v has indegree as zero
+        else:
+            return None
+
+    # prints the elements in topological sorted manner
+    # modified dft method
+    # the idea behind this algo is given here: https://youtu.be/n_yl2a6n7nM
+    def topological_sort(self):
+        # init a stack
+        stack = list()
+        # make visited dict
+        visited = dict()
+        # init visited with vertices_set
+        for v in self.vertices_set:
+            visited[v] = False
+        # iterate throught the vertices
+        for v in self.node_dic:
+            if visited[v] is False:
+                self.modified_dfs_for_top_sort(v, visited, stack)
+
+        # pop from stack and print (i.e. print from end)
+        for ind in xrange(len(stack)-1, -1, -1):
+            print stack[ind],
+
+    def modified_dfs_for_top_sort(self, v, visited, stack):
+        visited[v] = True
+        if v in self.node_dic:
+            a_list = [i.vertex for i in self.node_dic.get(v)]
+            for w in a_list:
+                if w in visited and visited[w] is False:
+                    self.modified_dfs_for_top_sort(w, visited, stack)
+        # adding the vertex to stack here, because at this point of time the
+        # vertex v has no more vertices to visit in dfs fashion, so
+        stack.append(v)
+
 
 # un-directed graph
 class Graph(Gr):
