@@ -112,11 +112,10 @@ class Gr(object):
         # in that case
         if v in self.node_dic:
             adjacent_list = [i.vertex for i in self.node_dic.get(v)]
-            if adjacent_list is not None:
-                for w in adjacent_list:
-                    if w in visited and visited[w] is False:
-                        # exploring the node without visiting other adjacent
-                        self.dfs(w, visited)
+            for w in adjacent_list:
+                if w in visited and visited[w] is False:
+                    # exploring the node without visiting other adjacent
+                    self.dfs(w, visited)
 
 
 # directed graph
