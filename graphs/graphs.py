@@ -117,6 +117,30 @@ class Gr(object):
                     # exploring the node without visiting other adjacent
                     self.dfs(w, visited)
 
+    # returns True if there is path from v1 to v2 and vice-versa
+    # to solve this we can either use bfs or dfs
+    # incase of un-directed graph, we just need to check for one side
+    # connectivity.
+    def has_path(self, v1, v2):
+        # init a visited dict
+        visited = dict()
+        for v in self.vertices_set:
+            visited[v] = False
+        # start from v1 and do bfs or dfs then see of v2 is also visited or not
+        self.dfs(v1, visited)
+        if visited[v2] is False:
+            return False
+        # check for reverse connectivity
+        # re-init the visited map
+        for v in self.vertices_set:
+            visited[v] = False
+        self.dfs(v2, visited)
+        if visited[v1] is False:
+            return False
+        # if both the above test fails, so there is strong connectivity b/w v1
+        # and v2, so I return True
+        return True
+
 
 # directed graph
 class DiGraph(Gr):
@@ -146,12 +170,15 @@ class DiGraph(Gr):
 
     # prints the elements in topological sorted manner
     # time = O(V*E),
-    # Since, this implementation of adjacency list is done using lists of dict
+    # Since, this implementation of adjacency list is done using dict of lists
     # so, the time complexity comes to O(EV), if I would have implemented the
     # graph using dictionary of dictionary, then this same approach will result
     # in O(V*V) time, as searching over the list time will get reducted
     # Even in the implementation of adjacency list we can improve time by using
-    # queue
+    # additional ds like dictionary where key would be the vertices and their
+    # values would be the number of indegree they have and then instead of
+    # searching in E nodes we can search in v slots in the map, so O(E)->O(V)
+    # thus overall T.C would get to O(v*v)
     def topological_sort2(self):
         print '\ntopological sort:'
         # run a loop untill graph is not empty
