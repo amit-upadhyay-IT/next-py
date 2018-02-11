@@ -292,3 +292,40 @@ class Graph(Gr):
     # in the node_dic, this is overridden function
     def vertices_count(self):
         return len(self.node_dic)
+
+    # returns True if the graph has cycle in it else False is returned
+    # you can check the visited map that for every visited vertex 'v', if there
+    # is any adjacent 'w' such that 'w' is already visited also 'w' should not
+    # be the parent of 'v'(coz, for a vertex its parent will always be visited)
+    # then there is a cycle in the un-directed graph.
+    def has_cycle(self):
+        # make visited array, call has_cycle_helper(works almost same as dfs)
+        visited = dict()
+        for v in self.vertices_set:
+            visited[v] = False
+        # iterate over all vertices and call has_cycle_helper, because there is
+        # possiblity that the graph may be disconnected and the cycle is in
+        # some part of graph.
+        # also, I am taking a dummy parent here which will be used in helper fun
+        parent = None
+        for v in self.node_dic:
+            if visited[v] is False:
+                # if you see the helper fun is returns true, then it has cycle
+                if self.has_cycle_helper(v, visited, parent):
+                    return True
+        # as the function didn't returned true i.e. it has no cycle
+        return False
+
+    def has_cycle_helper(self, v, visited, parent):
+        visited[v] = True
+        # marking the parent
+        if v in self.node_dic:
+            adjacent_list = [i.vertex for i in self.node_dic.get(v)]
+            for w in adjacent_list:
+                if w in visited and visited[w] is False:
+                    # exploring the node without visiting other adjacent
+                    parent = v
+                    self.has_cycle_helper(w, visited, parent)
+                elif visited[w] is True and parent is not w:
+                    # you can return true or print the message here itself
+                    return True
