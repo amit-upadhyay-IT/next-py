@@ -38,3 +38,22 @@ Example:
 
 minheap.min_heapify(index [, attribute_name])
 ```
+
+- Get the minimum:
+
+Example:
+
+```py
+# returns the node containing the minimum key
+minheap.get_min()
+```
+
+- Remove minimum / Extract minimum
+
+```py
+# remove the node containing minimum key and returns that node
+minheap.extract_min()
+```
+
+
+- Increase Key
