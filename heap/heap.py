@@ -26,7 +26,11 @@ class Heap(object):
     # specifit property of the object in heap
     def print_heap(self, attr_name=None):
         for i in xrange(1, self.heap_size + 1):
-            print perform(self.heap_list[i], attr_name)
+            print perform(self.heap_list[i], attr_name),
+        print
+
+    def get_heap_size(self):
+        return self.heap_size
 
 
 class MinHeap(Heap):
